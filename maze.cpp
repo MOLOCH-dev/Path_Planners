@@ -5,6 +5,8 @@
 
 #include <iostream>
 #include "maze.h"
+#include <fstream>
+#include <string>
 
 using namespace std;
 
@@ -73,7 +75,7 @@ void Map::createStack()
             int next_cell_dir = neighbours[rand() % neighbours.size()];
             int rX = cell_stack.top().first*2 + 1;
             int rY = cell_stack.top().second*2 + 1;
-            map[rX][rY] = visited;
+            map[rX][rY] = space;
 
             switch (next_cell_dir)
             {
@@ -121,20 +123,26 @@ void Map::createStack()
   }
   int rX = cell_stack.top().first*2 + 1;
   int rY = cell_stack.top().second*2 + 1;
-  map[rX][rY] = visited;
+  map[rX][rY] = space;
   
 }
 
 void Map::drawMap(vector<vector<char>> map)
 {
+    fstream file;
+    file.open("./maze_file.txt", ios_base::out);
     cout << "Drawing map";
     for(auto line : map)
     {
         cout << "\n" << endl;
         for (auto pixel : line) {
             cout << pixel << "  ";
+            file << pixel;
         }
+        
+        file << "\n";
     }
+    file.close();
 }
 
 
